@@ -2,7 +2,7 @@
 Introducing LangServe - a framework with surprising utility for simple LangChain Runnables
 
 <p align="center">
-    <img src="images/langserve_demo2.png">
+    <img src="images/service.png">
 </p>
 
 This GitHub repository is a companion to the Medium article [How to Deploy (Almost) Any LangChain Runnable in One Line](https://medium.com/mitb-for-all/how-to-deploy-almost-any-langchain-runnable-in-one-line-70e7ec1240d1)
