@@ -5,7 +5,7 @@ Introducing LangServe - a framework with surprising utility for simple LangChain
     <img src="images/langserve_demo2.png">
 </p>
 
-This GitHub repository is a companion to an upcoming Medium article.
+This GitHub repository is a companion to the Medium article [How to Deploy (Almost) Any LangChain Runnable in One Line](https://medium.com/mitb-for-all/how-to-deploy-almost-any-langchain-runnable-in-one-line-70e7ec1240d1)
 
 ## Setup
 This repository uses the [uv package installer](https://docs.astral.sh/uv/pip/packages/). 
