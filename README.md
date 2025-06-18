@@ -1,4 +1,4 @@
-# urban-enigma
+# The LangServe Introduction Repo
 Introducing LangServe - a framework with surprising utility for simple LangChain Runnables
 
 <p align="center">
