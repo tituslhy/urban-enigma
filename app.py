@@ -3,8 +3,11 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from langchain_ollama import OllamaLLM
 from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.runnables import RunnableLambda, RunnableParallel
 from langchain_core.output_parsers import StrOutputParser
 from langserve import add_routes
+
+from typing import Dict, Literal
 
 app = FastAPI(
     title="LangChain Llama Guard Server",
@@ -22,10 +25,9 @@ app.add_middleware(
     expose_headers=["*"],
 )
 
+# Define runnable
 llm = OllamaLLM(model="llama-guard3", temperature=0)
-
 parser = StrOutputParser()
-
 prompt = ChatPromptTemplate.from_messages(
     [
         (
@@ -35,14 +37,32 @@ prompt = ChatPromptTemplate.from_messages(
         ("human", "{input}")
     ]
 )
+guard_chain = prompt | llm | parser
+
+# Second runnable
+def is_superuser(
+    credentials: Dict[
+        Literal["username", "password"], str
+    ]
+) -> bool:
+    username = credentials.get("username", None)
+    password = credentials.get("password", None)
+    if username == "admin" and password == "admin":
+        return True
+    return False
+
+runnable = RunnableLambda(is_superuser)
+
+# Final runnable
+map_chain = RunnableParallel(
+    guard_chain = guard_chain,
+    superuser_chain = runnable,
+)
 
 add_routes(
     app,
-    prompt | llm | parser,
-    path="/gatekeeper",
-    enable_feedback_endpoint=True,
-    enable_public_trace_link_endpoint=True,
-
+    map_chain,
+    path="/gatekeeper"
 )
 
 if __name__ == "__main__":
