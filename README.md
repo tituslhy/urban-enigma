@@ -21,3 +21,8 @@ Once done, run
 ```
 ollama pull llama-guard3
 ```
+
+## To run the app
+```
+python app.py
+```
